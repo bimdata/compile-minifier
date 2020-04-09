@@ -49,7 +49,7 @@ jobs:
             git config --global user.name "Circle CI"
             echo -e "  StrictHostKeyChecking no\n" >> ~/.ssh/config
             . venv/bin/activate
-            PYTHONPATH=/home/circleci/repo semantic-release publish
+            PYTHONPATH=/home/circleci/repo semantic-release --retry publish
 workflows:
   version: 2
   test_and_release:
