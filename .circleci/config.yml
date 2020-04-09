@@ -1,0 +1,64 @@
+version: 2
+
+references:
+  container_config: &container_config
+    docker:
+      - image: circleci/python:3.8
+    working_directory: ~/repo
+
+  restore_env: &restore_env
+    restore_cache:
+      keys:
+        - v1-dependencies-{{ checksum "requirements.txt" }}
+        - v1-dependencies
+
+jobs:
+  test:
+    <<: *container_config
+
+    steps:
+      - checkout
+      - *restore_env
+      - run:
+          name: install packages
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install .
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run:
+          name: check Readme syntax
+          command: |
+            . venv/bin/activate
+            python setup.py sdist
+            twine check dist/*
+  release:
+    <<: *container_config
+    steps:
+      - checkout
+      - *restore_env
+      - add_ssh_keys
+      - run:
+          environment:
+            GIT_COMMIT_DESC: git log --format=oneline -n 1 $CIRCLE_SHA1
+          command: |
+            git config --global user.email "infra@bimdata.io"
+            git config --global user.name "Circle CI"
+            echo -e "  StrictHostKeyChecking no\n" >> ~/.ssh/config
+            . venv/bin/activate
+            PYTHONPATH=/home/circleci/repo semantic-release publish
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - test
+      - release:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
