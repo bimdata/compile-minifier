@@ -9,7 +9,7 @@ references:
   restore_env: &restore_env
     restore_cache:
       keys:
-        - v1-dependencies-{{ checksum "requirements.txt" }}
+        - v1-dependencies-{{ checksum "requirements/base.txt" }}-{{ checksum "requirements/ci.txt" }}
         - v1-dependencies
 
 jobs:
@@ -24,11 +24,11 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install .
+            pip install .[ci]
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ checksum "requirements/base.txt" }}-{{ checksum "requirements/ci.txt" }}
       - run:
           name: check Readme syntax
           command: |
