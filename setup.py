@@ -1,14 +1,18 @@
 from setuptools import setup, find_packages
-from os import path
-from io import open
+from setuptools.command.install import install
+import os
+import sys
 
 
 NAME = "compile-minifier"
 VERSION = "0.1.0"
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
-    long_description = f.read()
+
+def readme():
+    """print long description"""
+    with open("README.md") as f:
+        return f.read()
+
 
 with open("requirements/base.txt") as f:
     REQUIRES = f.read().strip().split("\n")
@@ -17,11 +21,26 @@ with open("requirements/ci.txt") as f:
     CI_REQUIRES = f.read().strip().split("\n")
 
 
+class VerifyVersionCommand(install):
+    """Custom command to verify that the git tag matches our version"""
+
+    description = "verify that the git tag matches our version"
+
+    def run(self):
+        tag = os.getenv("CIRCLE_TAG")
+
+        if tag != VERSION:
+            info = "Git tag: {0} does not match the version of this app: {1}".format(
+                tag, VERSION
+            )
+            sys.exit(info)
+
+
 setup(
     name=NAME,
     version=VERSION,
     description="Python compiler and minifier",
-    long_description=long_description,
+    long_description=readme(),
     long_description_content_type="text/markdown",
     author_email="contact@bimdata.io",
     url="https://github.com/bimdata/compile-minifier",
@@ -39,4 +58,5 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
+    cmdclass={"verify": VerifyVersionCommand,},
 )
