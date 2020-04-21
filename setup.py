@@ -50,7 +50,7 @@ setup(
     packages=find_packages(where="src"),
     python_requires=">=3.5, <4",
     include_package_data=True,
-    entry_points={"console_scripts": ["compileminify=main:entrypoint",],},
+    entry_points={"console_scripts": ["compileminify=compileminify.main:entrypoint",],},
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
