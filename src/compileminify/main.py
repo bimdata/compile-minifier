@@ -19,7 +19,9 @@ class CompileMinify(object):
         remove_py: bool = False,
         compile_root_py: bool = False,
     ):
-        self._apply_to_python_files(self._minify_and_compile, remove_tests, remove_py)
+        self._apply_to_python_files(
+            self._minify_and_compile, remove_tests, remove_py, compile_root_py
+        )
         print("Python files minified and compiled")
 
     def _apply_to_python_files(self, function, *args, **kwargs):
