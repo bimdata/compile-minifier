@@ -20,11 +20,14 @@ class CompileMinify(object):
         compile_root_py: bool = False,
     ):
         self._apply_to_python_files(
-            self._minify_and_compile, remove_tests, remove_py, compile_root_py
+            self._minify_and_compile,
+            remove_tests=remove_tests,
+            remove_py=remove_py,
+            compile_root_py=compile_root_py,
         )
         print("Python files minified and compiled")
 
-    def _apply_to_python_files(self, function, *args, **kwargs):
+    def _apply_to_python_files(self, function, **kwargs):
         # No compile python files in root folder
         # to preserve entrypoint
         level = 0
