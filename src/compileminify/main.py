@@ -39,7 +39,7 @@ class CompileMinify(object):
                     if file.endswith(".py"):
                         file = os.path.join(r, file)
                         function(file)
-                        if kwargs["remove_py"]:
+                        if kwargs["remove_py"] and file != "__init__.py":
                             os.remove(file)
             level += 1
 
