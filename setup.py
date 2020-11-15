@@ -5,7 +5,7 @@ import sys
 
 
 NAME = "compile-minifier"
-VERSION = "0.1.3"
+VERSION = "0.1.4"
 
 
 def readme():
@@ -57,6 +57,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     cmdclass={"verify": VerifyVersionCommand,},
 )
