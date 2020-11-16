@@ -36,18 +36,6 @@ jobs:
             python setup.py sdist
             twine check dist/*
 
-  verify_tag:
-    <<: *container_config
-    steps:
-      - checkout
-      - *restore_env
-      - run:
-          name: verify git tag vs. version
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            python setup.py verify
-
   release:
     <<: *container_config
     steps:
@@ -79,7 +67,6 @@ workflows:
   test_and_release:
     jobs:
       - test
-      - verify_tag
       - release:
           requires:
             - test
@@ -87,3 +74,6 @@ workflows:
             branches:
               only:
                 - master
+            tags:
+              only:
+                - /^([0-9]+\.){2}[0-9]+$/

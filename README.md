@@ -48,6 +48,17 @@ This command minify the code with [python-minifier](https://pypi.org/project/pyt
 
 By default, no python file modifications are executed in the root folder.
 
+
+### Deployment
+
+The deployment on pypi is automated by circle when a tag is pushed on master.
+
+For manual deployment, you can run the following command :
+
+```sh
+VERSION=<VERSION_TAG> python setup.py sdist && twine upload dist/*
+```
+
 ### Help
 
 Command line interfaces are generated with [Fire](https://github.com/google/python-fire)

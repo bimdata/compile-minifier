@@ -5,7 +5,7 @@ import sys
 
 
 NAME = "compile-minifier"
-VERSION = "0.1.4"
+VERSION = os.getenv("CIRCLE_TAG", os.getenv("VERSION"))
 
 
 def readme():
@@ -19,21 +19,6 @@ with open("requirements/base.txt") as f:
 
 with open("requirements/ci.txt") as f:
     CI_REQUIRES = f.read().strip().split("\n")
-
-
-class VerifyVersionCommand(install):
-    """Custom command to verify that the git tag matches our version"""
-
-    description = "verify that the git tag matches our version"
-
-    def run(self):
-        tag = os.getenv("CIRCLE_TAG")
-
-        if tag != VERSION:
-            info = "Git tag: {0} does not match the version of this app: {1}".format(
-                tag, VERSION
-            )
-            sys.exit(info)
 
 
 setup(
@@ -59,5 +44,4 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
-    cmdclass={"verify": VerifyVersionCommand,},
 )
