@@ -18,12 +18,14 @@ class CompileMinify(object):
         remove_tests: bool = False,
         remove_py: bool = False,
         compile_root_py: bool = False,
+        exclude_dirs: list[str] = [],
     ):
         self._apply_to_python_files(
             self._minify_and_compile,
             remove_tests=remove_tests,
             remove_py=remove_py,
             compile_root_py=compile_root_py,
+            exclude_dirs=exclude_dirs,
         )
         print("Python files minified and compiled")
 
@@ -39,7 +41,11 @@ class CompileMinify(object):
                     if file.endswith(".py"):
                         file = os.path.join(r, file)
                         function(file)
-                        if kwargs["remove_py"] and not file.endswith("__init__.py"):
+                        if (
+                            kwargs["remove_py"]
+                            and not file.endswith("__init__.py")
+                            and not (set(kwargs["exclude_dirs"]) & set(d))
+                        ):
                             os.remove(file)
             level += 1
 

@@ -41,13 +41,12 @@ python setup.py install --user
 The package is used exclusively on the command line:
 
 ```sh
-compile-minify run
+compileminify run
 ```
 
 This command minify the code with [python-minifier](https://pypi.org/project/python-minifier/) and compile all .py in .pyc recursively.
 
 By default, no python file modifications are executed in the root folder.
-
 
 ### Deployment
 
@@ -66,5 +65,5 @@ Command line interfaces are generated with [Fire](https://github.com/google/pyth
 For display help:
 
 ```sh
-compile-minify --help
+compileminify --help
 ```
