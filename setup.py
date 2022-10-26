@@ -14,13 +14,6 @@ def readme():
         return f.read()
 
 
-with open("requirements/base.txt") as f:
-    REQUIRES = f.read().strip().split("\n")
-
-with open("requirements/ci.txt") as f:
-    CI_REQUIRES = f.read().strip().split("\n")
-
-
 setup(
     name=NAME,
     version=VERSION,
@@ -29,9 +22,9 @@ setup(
     long_description_content_type="text/markdown",
     author_email="contact@bimdata.io",
     url="https://github.com/bimdata/compile-minifier",
-    install_requires=REQUIRES,
+    install_requires=["python-minifier==2.6.0", "fire==0.4.0"],
     extras_require={
-        "ci": CI_REQUIRES,
+        "ci": ["twine==3.1.1"],
     },
     package_dir={"": "src"},
     packages=find_packages(where="src"),
