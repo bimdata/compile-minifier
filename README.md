@@ -2,10 +2,6 @@
 
 Compile-minifier is a tool to minify and compile a structure code python.
 
-## Package version
-
-0.2.1
-
 ## Requirements
 
 Python 3.5 to 3.13
