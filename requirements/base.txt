@@ -1,2 +1,0 @@
-python-minifier==2.4.1
-fire==0.3.1

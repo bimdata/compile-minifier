@@ -4,11 +4,11 @@ Compile-minifier is a tool to minify and compile a structure code python.
 
 ## Package version
 
-0.1.4
+0.2.1
 
 ## Requirements
 
-Python 3.5+
+Python 3.5 to 3.13
 
 ## Installation & Usage
 
@@ -26,16 +26,6 @@ Or you can install directly from sources :
 pip install git+https://github.com/bimdata/compile-minifier.git#master
 ```
 
-### Setuptools
-
-Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
-
-```sh
-python setup.py install --user
-```
-
-(or `sudo python setup.py install` to install the package for all users)
-
 ### Get started
 
 The package is used exclusively on the command line:
@@ -51,12 +41,10 @@ By default, no python file modifications are executed in the root folder.
 
 ### Deployment
 
-The deployment on pypi is automated by circle when a tag is pushed on master.
-
 For manual deployment, you can run the following command :
 
 ```sh
-VERSION=<VERSION_TAG> python setup.py sdist && twine upload dist/*
+poetry publish --build --username=__token__ --password=
 ```
 
 ### Help
